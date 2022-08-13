@@ -14,8 +14,8 @@ df = kbt_init('btceur',12*60) # 12h
 
 $$
 \begin{align}
-    S_in \equiv \bigl\( SMA_{14} > SMA_{200} \bigr\) \& bigl\( RSI_{14} > 60 \bigr\)
-    S_out \equiv \big\( RSI_{14} < 40 \big\)
+    S_{in} \equiv \bigl\( SMA_{14} > SMA_{200} \bigr\) \& bigl\( RSI_{14} > 60 \bigr\) \\
+    S_{out} \equiv \big\( RSI_{14} < 40 \big\)
 \end{align}
 $$
 
