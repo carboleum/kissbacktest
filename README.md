@@ -1,5 +1,17 @@
 # Kissbacktet
 
+## Install TALib
+
+```bash
+sudo apt install -y build-essential wget
+wget http://prdownloads.sourceforge.net/ta-lib/ta-lib-0.4.0-src.tar.gz
+tar -xvf ta-lib-0.4.0-src.tar.gz
+cd ta-lib
+./configure --prefix=/usr
+make
+sudo make install
+```
+
 ## Load kissbacktest
 ```python
 %load kissbacktest.py
@@ -12,9 +24,11 @@ df = kbt_init('btceur',12*60) # 12h
 
 ## define signal from stategy
 
+example:
+
 $$
 \begin{align}
-    S_{in} \equiv \bigl\( SMA_{14} > SMA_{200} \bigr\) \& bigl\( RSI_{14} > 60 \bigr\) \\
+    S_{in} \equiv \bigl\( SMA_{14} > SMA_{200} \bigr\) \& \bigl\( RSI_{14} > 60 \bigr\) \\
     S_{out} \equiv \big\( RSI_{14} < 40 \big\)
 \end{align}
 $$
