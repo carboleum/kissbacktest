@@ -1,4 +1,4 @@
-# Kissbacktet
+# Kissbacktest
 
 ## Install TALib
 
@@ -41,9 +41,11 @@ df['sig_in'] = (df.RSI > 60) & (df.long < df.short)
 df['sig_out'] = (df.RSI < 40)
 ```
 
-## compute and trace kbt_graph
+## compute and trace graph
 
 ```python
 df = kbt_compute (df)
 kbt_graph(df)
 ```
+
+[Result](./example-plot.html)
