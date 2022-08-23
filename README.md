@@ -1,8 +1,8 @@
 # Kissbacktest
 
-Keep It Simple and Stupid backtesting in Python
+_Keep It Simple and Stupid_ backtesting in Python
 
-Explanation (in french and mathematical semantics) and example: 
+To have explanations (in french but with mathematical semantics and graphic illustrations): 
 follow this [link](https://carboleum.github.io/jekyll/2022/08/10/Introduction-au-backtesting.html)
 
 ## Install TALib
@@ -17,6 +17,12 @@ cd ta-lib
 ./configure --prefix=/usr
 make
 sudo make install
+```
+
+## Install Python Libraries
+
+```bash
+sudo pip3 install talib bokeh
 ```
 
 ## Load kissbacktest
