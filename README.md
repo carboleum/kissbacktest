@@ -1,6 +1,13 @@
 # Kissbacktest
 
+Keep It Simple and Stupid backtesting in Python
+
+Explanation (in french and mathematical semantics) and example: 
+follow this [link](https://carboleum.github.io/jekyll/2022/08/10/Introduction-au-backtesting.html)
+
 ## Install TALib
+
+To take full advantage of all features (technical indicators), you have to install TALib.
 
 ```bash
 sudo apt install -y build-essential wget
