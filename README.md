@@ -60,5 +60,3 @@ df['sig_out'] = (df.RSI < 40)
 df = kbt_compute (df)
 kbt_graph(df)
 ```
-
-[Result](./example-plot.html)
