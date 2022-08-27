@@ -22,7 +22,7 @@ sudo make install
 ## Install Python Libraries
 
 ```bash
-sudo pip3 install talib bokeh
+sudo pip3 install TA-Lib bokeh
 ```
 
 ## Load kissbacktest
