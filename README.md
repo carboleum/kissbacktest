@@ -32,7 +32,7 @@ sudo pip3 install TA-Lib bokeh
 
 ## load data
 ```python
-df = kbt_init('btceur',12*60) # 12h
+df = kbt_init('XXBTZEUR',1440) # 1d
 ```
 
 ## define signal from stategy
