@@ -7,10 +7,10 @@ from bokeh.layouts import column,row
  
 import talib as ta
 
-def kbt_init (pair,period): 
-    url = f'https://api.cryptowat.ch/markets/kraken/{pair}/ohlc'
-    ohlc = requests.get(url).json()['result'][str(period*60)]
-    columns = ['time','open','high','low','close','volume','count']
+def kbt_init (pair,period):
+    url = f'https://api.kraken.com/0/public/OHLC?pair={pair}&interval={period}'
+    ohlc = requests.get(url).json()['result'][pair]
+    columns = ['time','open','high','low','close','vwap','volume','count']
     df = pd.DataFrame(ohlc, columns=columns).astype(float)
     df = df.iloc[-1000:]
     return df
