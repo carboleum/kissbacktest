@@ -41,6 +41,9 @@ def kbt_graph (df):
         p1.line(df.time,df.slow,color='red')
     if 'fast' in df:
         p1.line(df.time,df.fast,color='green')
+    p1.triangle(df.time, df.close.where((df.signal == 1) & (df.signal.shift() == 0)), color='green', size=7)
+    p1.inverted_triangle(df.time, df.close.where((df.signal == 0) & (df.signal.shift() == 1)), color='red', size=7)
+
     #p2 =  figure(height=100,width=800,x_range=p1.x_range)
     #p2.xaxis[0].formatter = xformatter
     #p2.line(df.time,df.RSI)
