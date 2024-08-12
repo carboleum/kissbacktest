@@ -4,7 +4,8 @@ import numpy as np
 import pandas as pd
 from bokeh.plotting import figure,show
 from bokeh.layouts import column,row
- 
+from bokeh.models import DatetimeTickFormatter
+
 import talib as ta
 
 def kbt_init (pair,period):
@@ -30,29 +31,44 @@ def kbt_compute (df):
     return df
     
 def kbt_graph (df):
+    df['time'] = pd.to_datetime(df['time'], unit='s')
+    xformatter = DatetimeTickFormatter(hours="%H:%M", days="%d/%m", months="%m/%Y", years="%Y")
+    
     p1 = figure(height=300,width=800)
+    p1.xaxis[0].formatter = xformatter
     p1.line(df.time,df.close)
-    #p1.line(df.time,df.long,color='green')
-    #p1.line(df.time,df.short,color='red')
+    if 'slow' in df:
+        p1.line(df.time,df.slow,color='red')
+    if 'fast' in df:
+        p1.line(df.time,df.fast,color='green')
     #p2 =  figure(height=100,width=800,x_range=p1.x_range)
+    #p2.xaxis[0].formatter = xformatter
     #p2.line(df.time,df.RSI)
     #p3_0 = figure(height=100,width=800,x_range=p1.x_range)
+    #p3_0.xaxis[0].formatter = xformatter
     #p3_0.line(df.time,df.trend)
     p3_1 = figure(height=100,width=800,x_range=p1.x_range)
+    p3_1.xaxis[0].formatter = xformatter
     p3_1.line(df.time,df.sig_in,color='green')
     p3_2 = figure(height=100,width=800,x_range=p1.x_range)
+    p3_2.xaxis[0].formatter = xformatter
     p3_2.line(df.time,df.sig_out,color='red')
     p3_3 = figure(height=100,width=800,x_range=p1.x_range)
+    p3_3.xaxis[0].formatter = xformatter
     p3_3.line(df.time,df.sig_0)
-    p3_3_2 = figure(height=100,width=800,x_range=p1.x_range) 
+    p3_3_2 = figure(height=100,width=800,x_range=p1.x_range)
+    p3_3_2.xaxis[0].formatter = xformatter
     p3_3_2.line(df.time,df.sig_1)
     p3_4 = figure(height=100,width=800,x_range=p1.x_range)
+    p3_4.xaxis[0].formatter = xformatter
     p3_4.line(df.time,df.signal)
     p4 = figure(height=150,width=800,x_range=p1.x_range)
+    p4.xaxis[0].formatter = xformatter
     p4.line(df.time,df.r_0,color='lightgray')
     p4.line(df.time,df.r_strat)
     p4.line(df.time,df.r_fee,color='red')
     p5 = figure(height=300,width=800,x_range=p1.x_range)
+    p5.xaxis[0].formatter = xformatter
     p5.line(df.time,df.r_0.cumprod(),color='lightgray')
     p5.line(df.time,df.r_strat.cumprod())
     p5.line(df.time,df.R_net,color='red')
