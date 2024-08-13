@@ -54,9 +54,9 @@ $$
 
 ```python
 df['RSI'] = ta.RSI(df.close, timeperiod=14)
-df['long'] = ta.SMA(df.close, timeperiod=200)
-df['short'] = ta.SMA(df.close,timeperiod=14)
-df['sig_in'] = (df.RSI > 60) & (df.long < df.short)
+df['slow'] = ta.SMA(df.close, timeperiod=200)
+df['fast'] = ta.SMA(df.close,timeperiod=14)
+df['sig_in'] = (df.RSI > 60) & (df.slow < df.fast)
 df['sig_out'] = (df.RSI < 40)
 ```
 
@@ -66,3 +66,20 @@ df['sig_out'] = (df.RSI < 40)
 df = kbt_compute (df)
 kbt_graph(df)
 ```
+
+<p align="center"><img src="img/20240813-1.png" /></p>
+
+<p align="center"><img src="img/20240813-2.png" /></p>
+
+<p align="center"><img src="img/20240813-3.png" /></p>
+
+<p align="center"><img src="img/20240813-4.png" /></p>
+
+<p align="center"><img src="img/20240813-5.png" /></p>
+
+<p align="center"><img src="img/20240813-6.png" /></p>
+
+<p align="center"><img src="img/20240813-7.png" /></p>
+
+<p align="center"><img src="img/20240813-8.png" /></p>
+
