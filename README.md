@@ -30,12 +30,18 @@ sudo pip3 install TA-Lib bokeh
 %load kissbacktest.py
 ```
 
-## load data
+## Download data
+
+Request the latest 720 values from Kraken API:
 ```python
 df = kbt_init('XXBTZEUR',1440) # 1d
 ```
+or download [the .cvs file directly from Kraken.com](https://support.kraken.com/hc/en-us/articles/360047124832-Downloadable-historical-OHLCVT-Open-High-Low-Close-Volume-Trades-data) and read it:
+```python
+df = pd.read_csv('XXBTZEUR_14400.csv')
+```
 
-## define signal from stategy
+## Define signal from stategy
 
 example:
 
