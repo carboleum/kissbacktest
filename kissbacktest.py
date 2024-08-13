@@ -18,9 +18,10 @@ def kbt_init (pair,period):
 
 def kbt_compute (df):
     # signal
-    df['sig_0'] = df.sig_in.astype(int) - df.sig_out.astype(int)
-    df['sig_1'] = df.sig_0.where(df.sig_0!=0).ffill()
-    df['signal'] = df.sig_1 > 0
+    if not 'signal' in df:
+        df['sig_0'] = df.sig_in.astype(int) - df.sig_out.astype(int)
+        df['sig_1'] = df.sig_0.where(df.sig_0!=0).ffill()
+        df['signal'] = df.sig_1 > 0
     # Rendements
     df['close'] = df.close.replace(to_replace=0, method='ffill')
     df['r_0'] = df.close / df.close.shift()
@@ -30,50 +31,63 @@ def kbt_compute (df):
     df['R_net'] = (df.r_strat * df.r_fee).cumprod()
     return df
     
-def kbt_graph (df):
-    df['time'] = pd.to_datetime(df['time'], unit='s')
-    xformatter = DatetimeTickFormatter(hours="%H:%M", days="%d/%m", months="%m/%Y", years="%Y")
-    
-    p1 = figure(height=300,width=800)
-    p1.xaxis[0].formatter = xformatter
-    p1.line(df.time,df.close)
-    if 'slow' in df:
-        p1.line(df.time,df.slow,color='red')
-    if 'fast' in df:
-        p1.line(df.time,df.fast,color='green')
-    p1.triangle(df.time, df.close.where((df.signal == 1) & (df.signal.shift() == 0)), color='green', size=7)
-    p1.inverted_triangle(df.time, df.close.where((df.signal == 0) & (df.signal.shift() == 1)), color='red', size=7)
+def kbt_graph (df, y_axis_type = "linear", full=False):
 
-    #p2 =  figure(height=100,width=800,x_range=p1.x_range)
-    #p2.xaxis[0].formatter = xformatter
+    lst = []
+    df['time'] = pd.to_datetime(df.time, unit='s')
+    
+    f0 = figure(height = 300, width = 800, x_axis_type = 'datetime', y_axis_type = y_axis_type)
+    f0.line(df.time,df.close)
+    if 'slow' in df:
+        f0.line(df.time,df.slow,color='red')
+    if 'fast' in df:
+        f0.line(df.time,df.fast,color='green')
+    f0.triangle(df.time, df.close.where((df.signal == 1) & (df.signal.shift() == 0)), color='green', size=7)
+    f0.inverted_triangle(df.time, df.close.where((df.signal == 0) & (df.signal.shift() == 1)), color='red', size=7)
+    lst.append(f0)
+    
+    #p2 =  figure(height=100,width=800,x_range=f0.x_range, x_axis_type = 'datetime')
     #p2.line(df.time,df.RSI)
-    #p3_0 = figure(height=100,width=800,x_range=p1.x_range)
-    #p3_0.xaxis[0].formatter = xformatter
+    
+    #p3_0 = figure(height=100,width=800,x_range=f0.x_range, x_axis_type = 'datetime')
     #p3_0.line(df.time,df.trend)
-    p3_1 = figure(height=100,width=800,x_range=p1.x_range)
-    p3_1.xaxis[0].formatter = xformatter
-    p3_1.line(df.time,df.sig_in,color='green')
-    p3_2 = figure(height=100,width=800,x_range=p1.x_range)
-    p3_2.xaxis[0].formatter = xformatter
-    p3_2.line(df.time,df.sig_out,color='red')
-    p3_3 = figure(height=100,width=800,x_range=p1.x_range)
-    p3_3.xaxis[0].formatter = xformatter
-    p3_3.line(df.time,df.sig_0)
-    p3_3_2 = figure(height=100,width=800,x_range=p1.x_range)
-    p3_3_2.xaxis[0].formatter = xformatter
-    p3_3_2.line(df.time,df.sig_1)
-    p3_4 = figure(height=100,width=800,x_range=p1.x_range)
-    p3_4.xaxis[0].formatter = xformatter
-    p3_4.line(df.time,df.signal)
-    p4 = figure(height=150,width=800,x_range=p1.x_range)
-    p4.xaxis[0].formatter = xformatter
-    p4.line(df.time,df.r_0,color='lightgray')
-    p4.line(df.time,df.r_strat)
-    p4.line(df.time,df.r_fee,color='red')
-    p5 = figure(height=300,width=800,x_range=p1.x_range)
-    p5.xaxis[0].formatter = xformatter
-    p5.line(df.time,df.r_0.cumprod(),color='lightgray')
-    p5.line(df.time,df.r_strat.cumprod())
-    p5.line(df.time,df.R_net,color='red')
-    layout = column(p1,p3_1,p3_2,p3_3,p3_3_2,p3_4,p4,p5)
-    show(layout)
+
+    if full:
+        if 'sig_in' in df:
+            fig = figure(height=100,width=800,x_range=f0.x_range, x_axis_type = 'datetime')
+            fig.line(df.time,df.sig_in,color='green')
+            lst.append(fig)
+
+        if 'sig_out' in df:
+            fig = figure(height=100,width=800,x_range=f0.x_range, x_axis_type = 'datetime')
+            fig.line(df.time,df.sig_out,color='red')
+            lst.append(fig)
+    
+        if 'sig_0' in df:
+            fig = figure(height=100,width=800,x_range=f0.x_range, x_axis_type = 'datetime')
+            fig.line(df.time,df.sig_0)
+            lst.append(fig)
+
+    if 'sig_1' in df:
+        fig = figure(height=100,width=800,x_range=f0.x_range, x_axis_type = 'datetime')
+        fig.line(df.time,df.sig_1)
+        lst.append(fig)
+    
+    fig = figure(height=100,width=800,x_range=f0.x_range, x_axis_type = 'datetime')
+    fig.line(df.time,df.signal)
+    lst.append(fig)
+
+    if full:
+        fig = figure(height=150,width=800,x_range=f0.x_range, x_axis_type = 'datetime')
+        fig.line(df.time,df.r_0,color='lightgray')
+        fig.line(df.time,df.r_strat)
+        fig.line(df.time,df.r_fee,color='red')
+        lst.append(fig)
+    
+    fig = figure(height = 300, width = 800, x_range = f0.x_range, x_axis_type = 'datetime', y_axis_type = y_axis_type)
+    fig.line(df.time,df.r_0.cumprod(),color='lightgray')
+    fig.line(df.time,df.r_strat.cumprod())
+    fig.line(df.time,df.R_net,color='red')
+    lst.append(fig)
+     
+    show(column(lst))
