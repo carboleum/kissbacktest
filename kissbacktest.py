@@ -26,7 +26,7 @@ def kbt_compute (df):
     df['close'] = df.close.replace(to_replace=0, method='ffill')
     df['r_0'] = df.close / df.close.shift()
     df['r_strat'] = np.where(df.position.shift(), df.r_0, 1)
-    df['r_fee'] = np.where(df.position.shift() + df.signal == 1, 1-0.0025, 1)
+    df['r_fee'] = np.where(df.position.shift() + df.position == 1, 1-0.0025, 1)
     # Rendement cumulé
     df['R_net'] = (df.r_strat * df.r_fee).cumprod()
     return df
