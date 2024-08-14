@@ -77,7 +77,7 @@ kbt_graph(df)
 
 $$ Price, SMA_{200}, SMA_{14} $$
 
-<p align="center"><img src="img/20240813-1.png" /></p>
+<p align="center"><img src="img/20240813-1b.png" /></p>
 
 $$ RSI_{14} $$
 
