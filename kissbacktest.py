@@ -18,15 +18,15 @@ def kbt_init (pair,period):
 
 def kbt_compute (df):
     # signal
-    if not 'signal' in df:
+    if not 'position' in df:
         df['sig_0'] = df.sig_in.astype(int) - df.sig_out.astype(int)
         df['sig_1'] = df.sig_0.where(df.sig_0!=0).ffill()
-        df['signal'] = df.sig_1 > 0
+        df['position'] = df.sig_1 > 0
     # Rendements
     df['close'] = df.close.replace(to_replace=0, method='ffill')
     df['r_0'] = df.close / df.close.shift()
-    df['r_strat'] = np.where(df.signal.shift(), df.r_0, 1)
-    df['r_fee'] = np.where(df.signal.shift() + df.signal == 1, 1-0.0025, 1)
+    df['r_strat'] = np.where(df.position.shift(), df.r_0, 1)
+    df['r_fee'] = np.where(df.position.shift() + df.signal == 1, 1-0.0025, 1)
     # Rendement cumulé
     df['R_net'] = (df.r_strat * df.r_fee).cumprod()
     return df
@@ -42,8 +42,8 @@ def kbt_graph (df, y_axis_type = "linear", full=False):
         f0.line(df.time,df.slow,color='red')
     if 'fast' in df:
         f0.line(df.time,df.fast,color='green')
-    f0.triangle(df.time, df.close.where((df.signal == 1) & (df.signal.shift() == 0)), color='green', size=7)
-    f0.inverted_triangle(df.time, df.close.where((df.signal == 0) & (df.signal.shift() == 1)), color='red', size=7)
+    f0.triangle(df.time, df.close.where((df.position == 1) & (df.position.shift() == 0)), color='green', size=7)
+    f0.inverted_triangle(df.time, df.close.where((df.position == 0) & (df.position.shift() == 1)), color='red', size=7)
     lst.append(f0)
     
     #p2 =  figure(height=100,width=800,x_range=f0.x_range, x_axis_type = 'datetime')
@@ -74,7 +74,7 @@ def kbt_graph (df, y_axis_type = "linear", full=False):
         lst.append(fig)
     
     fig = figure(height=100,width=800,x_range=f0.x_range, x_axis_type = 'datetime')
-    fig.line(df.time,df.signal)
+    fig.line(df.time,df.position)
     lst.append(fig)
 
     if full:
