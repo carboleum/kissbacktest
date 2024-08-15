@@ -77,23 +77,23 @@ kbt_graph(df)
 
 $$ Price, SMA_{200}, SMA_{14} $$
 
-<p align="center"><img src="img/20240813-1b.png" /></p>
+<p align="center"><img src="img/20240813-1b.png" width="800"/></p>
 
 $$ RSI_{14} $$
 
-<p align="center"><img src="img/20240813-2.png" /></p>
+<p align="center"><img src="img/20240813-2.png" width="800" /></p>
 
 $$ SIG_{in} \equiv \bigl( SMA_{14} > SMA_{200} \bigr) \ \\&\  \bigl( RSI_{14} > 60 \bigr) $$
 
-<p align="center"><img src="img/20240813-3.png" /></p>
+<p align="center"><img src="img/20240813-3.png" width="800" /></p>
 
 $$ SIG_{out} \equiv \big( RSI_{14} < 40 \big) $$
 
-<p align="center"><img src="img/20240813-4.png" /></p>
+<p align="center"><img src="img/20240813-4.png" width="800" /></p>
 
 $$ SIG_0 \equiv SIG_{in} - SIG_{out} $$
 
-<p align="center"><img src="img/20240813-5.png" /></p>
+<p align="center"><img src="img/20240813-5.png" width="800" /></p>
 
 $$
 SIG_1(t_n) = 
@@ -105,7 +105,7 @@ $$
 
 $$ POS \equiv SIG_1 > 0 $$
 
-<p align="center"><img src="img/20240813-6.png" /></p>
+<p align="center"><img src="img/20240813-6.png" width="800" /></p>
 
 $$ r_{HODL}(t_n) = { Prix(t_n)\over Prix(t_{n-1}) } $$
 
@@ -120,8 +120,8 @@ $$ r_{fee}(t_n) =
 1 & \quad \text{otherwise}
 \end{cases} $$
 
-<p align="center"><img src="img/20240813-7.png" /></p>
+<p align="center"><img src="img/20240813-7.png" width="800" /></p>
 
 $$ R_{netto}(t_n) = \prod^n_{i=1} \biggl( r_{strat}(t_i) \times r_{fee}(t_i) \bigg) $$
 
-<p align="center"><img src="img/20240813-8.png" /></p>
+<p align="center"><img src="img/20240813-8.png" width="800" /></p>
